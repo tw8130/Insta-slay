@@ -9,6 +9,16 @@ class Profile(models.Model):
     profile_photo = models.ImageField(default='PHOTO', upload_to='profile_pics/')
     # followers = models.ForeignKey(Follow, on_delete=models.CASCADE)
 
+    def save_profile(self):
+        self.save()
+
+    def delete_profile(self):
+        self.delete()
+    
+    def update_profile(self,update):
+        self.profile_photo = update
+        self.save()
+
     def __str__(self):
         return self.profile_photo 
 
@@ -16,6 +26,12 @@ class Follow(models.Model):
     following = models.ForeignKey(User, related_name="who_follows", on_delete=models.CASCADE)
     follower = models.ForeignKey(User, related_name="who_is_followed",on_delete=models.CASCADE)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    def save_follow(self):
+        self.save()
+
+    def delete_follow(self):
+        self.delete()
 
     def __str__(self):
         return self.user 
@@ -30,9 +46,37 @@ class Image(models.Model):
     profile = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE)
     photo_comments = models.IntegerField(default=0)
 
+    class Meta:
+        ordering = ('-pub_date')
 
+    def save_image(self):
+        self.save()
+    
+    def delete_image(self):
+        self.delete()
+    
+    def update_caption(self,update):
+        self.photo_caption = update
+        self.save()
+    
     def __str__(self):
-    	return self.photo_name
+        return self.photo_name
+
+    @classmethod
+    def get_all_images(cls):
+        all_images = Image.objects.all()
+        return all_images
+    
+    @classmethod
+    def get_image_by_id(cls, id):
+        the_image = Image.objects.get(id =id)
+        return the_image
+    
+    @classmethod
+    def search_by_user(cls,search_term):
+        photo = cls.objects.filter(user__icontains=search_term)
+        return photo   
+    
 
 class Comments(models.Model):
     text = models.TextField(max_length=255)
@@ -42,4 +86,14 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.text
+    
+    def delete_comments(self):
+        self.delete()
+    
+    def save_comments(self):
+        self.save()
+    
+    def update_comments(self,update):
+        self.text = update
+        self.save()
 
