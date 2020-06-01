@@ -25,7 +25,12 @@ class Profile(models.Model):
     @classmethod
     def search_by_profile(cls,search_term):
         photo = cls.objects.filter(user__icontains=search_term)
-        return photo   
+        return photo  
+
+    @classmethod
+    def get_all_users(cls):
+        all_users = Profile.objects.all()
+        return all_users 
     
 
 class Follow(models.Model):
@@ -78,7 +83,6 @@ class Image(models.Model):
         the_image = Image.objects.get(id =id)
         return the_image
     
- 
 class Comments(models.Model):
     text = models.TextField(max_length=255)
     date_posted = models.DateTimeField(auto_now_add=True)
