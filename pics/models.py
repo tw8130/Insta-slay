@@ -22,6 +22,12 @@ class Profile(models.Model):
     def __str__(self):
         return self.profile_photo 
 
+    @classmethod
+    def search_by_profile(cls,search_term):
+        photo = cls.objects.filter(user__icontains=search_term)
+        return photo   
+    
+
 class Follow(models.Model):
     following = models.ForeignKey(User, related_name="who_follows", on_delete=models.CASCADE)
     follower = models.ForeignKey(User, related_name="who_is_followed",on_delete=models.CASCADE)
@@ -72,12 +78,7 @@ class Image(models.Model):
         the_image = Image.objects.get(id =id)
         return the_image
     
-    @classmethod
-    def search_by_user(cls,search_term):
-        photo = cls.objects.filter(user__icontains=search_term)
-        return photo   
-    
-
+ 
 class Comments(models.Model):
     text = models.TextField(max_length=255)
     date_posted = models.DateTimeField(auto_now_add=True)
