@@ -18,6 +18,8 @@ class CommentForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
   class Meta:
     model = Image
+    
+    exclude=['user']
 
     fields = ('photo_name', 'photo', 'photo_caption')
 
@@ -34,3 +36,10 @@ class SignInForm():
     class Meta:
         model = User
         fields = ['username', 'email']
+
+class ProfileForm(forms.ModelForm):
+	model = Profile
+	username = forms.CharField(label='Username',max_length = 30)
+	
+	bio = forms.CharField(label='Image Caption',max_length=500)
+	profile_pic = forms.ImageField(label = 'Image Field')

@@ -5,42 +5,42 @@ import datetime as dt
 class CommentsTestClass(TestCase):
     def setup(self):
         '''
-        Method that allows us to create an instance of the Location class before every test.
+        Method that allows us to create an instance of the Comments class before every test.
         '''
-        self.nairobi= Location(loc_name = 'Kenya')
-        self.nairobi.save_location()
+        self.comment= Comments(text = 'amazing')
+        self.comment.save_comments()
 
     def test_instance(self):
         '''
         test to confirm that the object is being instantiated correctly
         '''
-        self.assertTrue(isinstance(self.nairobi,Location))
+        self.assertTrue(isinstance(self.comment,Comments))
     
     def tearDown(self):
         '''
-        Method to delete  instance of our location model from the database after each test
+        Method to delete  instance of our comments model from the database after each test
         '''
-        self.nairobi.delete_location()
+        self.comment.delete_comments()
 
 class ProfileTestClass(TestCase):
     def setUp(self):
         '''
-        Method that allows us to create an instance of the Category class before every test.
+        Method that allows us to create an instance of the Profile class before every test.
         '''
-        self.travel = Category(cat_name ='Nature')
-        self.travel.save_category()
+        self.photo = Profile(profile_photo ='image4.jpg')
+        self.photo.save_photo()
 
     def test_instance(self):
         '''
         test to confirm that the object is being instantiated correctly
         '''
-        self.assertTrue(isinstance(self.travel,Category))
+        self.assertTrue(isinstance(self.photo,Profile))
     
     def tearDown(self):
         '''
-        Method to delete  instance of our category model from the database after each test
+        Method to delete  instance of our profile model from the database after each test
         '''
-        self.travel.delete_category()
+        self.photo.delete_photo()
 
 class ImageTestClass(TestCase):
    """
@@ -49,15 +49,10 @@ class ImageTestClass(TestCase):
    #Set up method
    def setUp(self):
        '''
-       Method that allows us to create an instance of the Category class before every test.
+       Method that allows us to create an instance of the Image class before every test.
        '''
-       self.comment = Category(cat_name='Travel')
-       self.comment.save_category()
 
-       self.nairobi = Location(loc_name='Kenya')
-       self.nairobi.save_location()
-
-       self.image = Image(photo_name='Fashion', photo_caption='cool', =self.nairobi, category=self.travel)
+       self.image = Image(photo_name='Fashion', photo_caption='cool',photo_comments ='fansy', pub_date='2020.06.12')
        self.image.save_image()
 
 

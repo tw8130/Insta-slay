@@ -65,14 +65,17 @@
                                 </span>
                     
                         <!-- Caption Section -->
+                        <p><strong>{{photo.user}}</strong> :{{photo.photo_caption}}</p>
+
                         {% if all_users %} {% for user in all_users %}
                         <strong> "{{user.user}}" </strong>
                         {% endfor %}{% else %}
-                        
-                        <p><strong>{{photo.user}}</strong> :{{photo.photo_caption}}</p>
+
+                        <!-- <p><strong>{{photo.user}}</strong> :{{photo.photo_caption}}</p> -->
                         
                         {% endif %} 
 
+                        
                         <div class='commentsection'>
                             <input type='text' id='cmnt' placeholder='Add a comment...'>
                             <form style="margin-top: 100px;" method="post" enctype="multipart/form-data">

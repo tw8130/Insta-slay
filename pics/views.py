@@ -34,7 +34,7 @@ def welcome(request):
 def upload(request):
     current_user = request.user
     p = Profile.objects.filter(id=current_user.id).first()
-    user = Image.objects.filter(user=p).all()
+    # user = Image.objects.filter(user=p).all()
     if request.method == 'POST':
         form = PostForm(request.POST,request.FILES)
         if form.is_valid():
@@ -108,7 +108,7 @@ def upload_profile(request):
             if form.is_valid():
                 requested_profile.profile_photo = form.cleaned_data['profile_photo']
                 requested_profile.bio = form.cleaned_data['bio']
-                requested_profile.user = form.cleaned_data['user']
+                # requested_profile.username = form.cleaned_data['username']
                 requested_profile.save_profile()
                 return redirect( profile )
         else:
@@ -118,7 +118,7 @@ def upload_profile(request):
             form = ProfileUploadForm(request.POST,request.FILES)
 
             if form.is_valid():
-                new_profile = Profile(profile_photo = form.cleaned_data['profile_photo'],bio = form.cleaned_data['bio'],user = form.cleaned_data['user'])
+                new_profile = Profile(profile_photo = form.cleaned_data['profile_photo'],bio = form.cleaned_data['bio'])
                 new_profile.save_profile()
                 return redirect( profile )
         else:
