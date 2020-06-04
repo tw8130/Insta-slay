@@ -1,0 +1,47 @@
+{%extends 'al-pics/base.html'%}
+{% load staticfiles%}
+{% load bootstrap3 %}
+{%block content%}
+
+<div class="content">
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <div>
+            <img class='rounded-circle article-img crop'src="{{ post.user.profile.image.url }}" height="50" width="50">
+            <a class="black-link">{{ photo.user }}</a>
+          </div>
+          {% if all_images %} {% for photo in all_images %}
+          <img class="img-fluid img-thumbnail" src="{{ photo.photo.url }}">
+
+          <img class"likehrt" src="{% static 'images/liked.jpg' %}" alt="liked picture"class="img-responsive"onclick="buttonclick();">
+          <input type="text" id="gimper" value="0"></input>
+          <img class="commenthrt" id='comment-icon' src="{% static 'images/comment.jpeg' %}" class="img-responsive" alt=" commentImage">
+
+          <p>
+            <a class="black-link">{{ photo.user }}</a>
+            {{ photo.photo_caption }}
+          </p>
+        </div>
+        <div class="comment">
+          {% for comment in photo.comments.all %}
+          <p>
+            <a class="black-link">{{ comment.user }}</a>
+            {{ comment.text }}
+            </br><small>{{ comment.date_posted|date:'F d, Y' }}</small>
+          </p>
+            {% empty %}
+            There are no comments on this post.
+          {% endfor %}
+        </div>
+        <div>
+          <small>{{ photo.pub_date|date:'F d, Y' }}</small>
+        </div>
+    </article>
+  </div>
+  <script>
+    function buttonclick() {
+  document.getElementById("gimper").value++;
+}
+  </script>
+{% endblock %}

@@ -20,10 +20,10 @@ class Profile(models.Model):
         self.save()
 
     def __str__(self):
-        return self.profile_photo 
+        return self.bio 
 
     @classmethod
-    def search_by_profile(cls,search_term):
+    def search_by_user(cls,search_term):
         photo = cls.objects.filter(user__icontains=search_term)
         return photo  
 
@@ -45,20 +45,21 @@ class Follow(models.Model):
         self.delete()
 
     def __str__(self):
-        return self.user 
+        return self.user
+    
 
 class Image(models.Model):
     photo = models.ImageField(upload_to = "images/",default='VALID PYTHON')
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     photo_name = models.CharField(max_length = 30)
-    likes = models.IntegerField(default=0)
+    likes = models.CharField(max_length=20, blank=True)
     photo_caption = models.TextField(max_length=50)
     pub_date = models.DateTimeField(auto_now_add=True)
-    profile = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE)
-    photo_comments = models.IntegerField(default=0)
+    # profile = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE, blank=True)
+    photo_comments = models.CharField(max_length=150)
 
     class Meta:
-        ordering = ('-pub_date')
+        ordering = ['-pub_date']
 
     def save_image(self):
         self.save()
@@ -71,7 +72,7 @@ class Image(models.Model):
         self.save()
     
     def __str__(self):
-        return self.photo_name
+        return self.photo_caption
 
     @classmethod
     def get_all_images(cls):
@@ -87,7 +88,7 @@ class Comments(models.Model):
     text = models.TextField(max_length=255)
     date_posted = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    photo = models.ForeignKey(Image ,on_delete=models.CASCADE)
+    photo= models.ForeignKey(Image, on_delete=models.CASCADE,related_name='comment',default='3')
 
     def __str__(self):
         return self.text
@@ -101,4 +102,3 @@ class Comments(models.Model):
     def update_comments(self,update):
         self.text = update
         self.save()
-

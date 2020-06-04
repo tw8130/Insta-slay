@@ -1,0 +1,310 @@
+{% extends 'all-pics/base.html' %} 
+{% load static%} 
+{% load bootstrap3 %} 
+{% block content %} 
+{{block.super}}
+
+{% if request.user.is_authenticated %}
+
+{% else %}
+<p>You must be authenticated</p>
+{% endif %}
+<div class="homebody">
+    <div class="container">
+
+
+
+
+        <!-- SECTION 1 -->
+
+        <!-- USED TO STYLE PICTURE-BODYSIZE IN HOME-PAGE  -->
+        <div class="w3-card-6" style="width:50%">
+
+            <div class="container">
+                {% if all_images %} {% for photo in all_images %}
+
+                <div class="imagepadding">
+
+                    <!-- BootStrap Class For adding Border around picture -->
+                    <div class="panel panel-primary">
+
+                        <!-- SECTION 1 PROFILE & user name -->
+
+                        <!-- Profile Picture and User name for account -->
+                       
+                        <p class="usernamehome-dp">
+                            {% if profile %} {% for image in profile %}
+                            <img src="{{ image.profile_photo.url}}" class="circlehome-dp" alt="signuplogo ">
+                            <strong></strong>
+                            {% endfor %} {% endif %}       
+                         {% if all_users %} {% for user in all_users %}
+                            <strong> "{{user.user}}" </strong>
+                        {% endfor %}{% else %}
+                        <strong>{{photo.user}}</strong>
+
+                        {% endif %}
+                        </p>
+                       
+                        <!-- SECTION 2 (IMAGE) -->
+                        <!-- POSTED IMAGE -->
+                        <a href="{{ photo.photo }}" data-lightbox="gallery">
+                            <img src="{{ photo.photo.url }}" class="img-responsive" style="width:200%;margin-left: 0%;margin-top:15px; ">
+                        </a>
+
+                        <!--Like & Comment Section -->
+                        <div class="container">
+                            <div class='likesect'>
+
+                                <span class="like-row">
+                                    <img class="likehrt" src="{% static 'images/red-heart.jpg' %}" alt="liked picture"class="img-responsive"onclick="buttonclick();">
+                                    <p><input type="text" id="gimper" value="0">Likes</input></p>
+                                    <img class="commenthrt" id='comment-icon' src="{% static 'images/comment.jpeg' %}" class="img-responsive" alt=" commentImage">
+                                    <img class="savehrt" src="{% static 'images/saved.png' %}" alt="save picture">
+                                        
+                                    </p>
+                                </span>
+                    
+                        <!-- Caption Section -->
+                        {% if all_users %} {% for user in all_users %}
+                        <strong> "{{user.user}}" </strong>
+                        {% endfor %}{% else %}
+                        
+                        <p><strong>{{photo.user}}</strong> :{{photo.photo_caption}}</p>
+                        
+                        {% endif %} 
+
+                        <div class='commentsection'>
+                            <input type='text' id='cmnt' placeholder='Add a comment...'>
+                            <form style="margin-top: 100px;" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {% bootstrap_form form%}
+                                <input type="submit" class="btn btn-primary btn-sm" value="Submit">
+                                <input type="hidden" name="next" value="{{next}}">
+                            </form>
+                            <span class='dot02'></span>
+                        </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                {% endfor %} {% else%}
+                <h3>You have no images</h3>
+
+                {% endif %}
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<script>
+   function buttonclick() {
+  document.getElementById("gimper").value++;
+}
+</script>
+<style>
+                            
+
+                                    /* HOME PAGE */
+
+
+                                    .homebody{
+                                      margin-top: 13%;
+                                      /* margin-left: 25%; */
+                                      background: #77A1D3;  /* fallback for old browsers */
+                                      background: -webkit-linear-gradient(to right, #E684AE, #79CBCA, #77A1D3);  /* Chrome 10-25, Safari 5.1-6 */
+                                      background: linear-gradient(to right, #E684AE, #79CBCA, #77A1D3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+                                    }
+
+                                    .navbar-fixed-bottom{
+                                        display: bottom;
+                                    }
+
+
+                                    .panel-primary{
+                                      width: 100%;
+                                      border-color: rgb(216, 209, 209)!important;
+                                    }
+
+                                    .imagepadding{
+                                        padding-top: 70px;
+                                    }
+
+                                    /* Home Profile pic above post */
+
+                                    .usernamehome-dp{
+                                        font-size: 15px;
+                                        margin-top: 15px;
+                                        margin-left: 5%;
+                                    }
+                                    
+                                    .circlehome-dp{
+                                        height: 32px;
+                                        width: 32px;
+                                        border-radius: 100%;
+                                    }
+                                    .likesect{
+                                      margin-top: 1%;
+                                      margin-left: 1%;
+                                    }
+                                    .likedhrt{
+                                        height: 17px;
+                                        width: 18px;
+                                    }
+                                    .likehrt{
+                                        height: 39px;
+                                        width: 50px;
+                                    }
+                                    
+                                    .commenthrt{
+                                        height: 34px;
+                                        width: 29px;
+                                        margin-left: 1%;
+                                    }
+
+                                    .savehrt{
+                                        height: 28px;
+                                        width: 30px;
+                                        margin-left: 42%;
+                                    }
+                                    .commentsection{
+                                        position: relative;
+                                        border-top: 1px solid #efefef;
+                                        width: 51%;
+                                        padding: 20px 26px 20px 0;
+                                        margin-top: 4px;
+                                        overflow: hidden;
+                                    }
+                                    #cmnt{
+                                        outline: none;
+                                        overflow-x: scroll;
+                                        padding: 0;
+                                        background: none;
+                                        border: none;
+                                        color: #999;
+                                        width: 100%;
+                                        height: 18px;
+                                        max-height: 80px;
+                                        resize: none;
+                                    }
+                                    
+@media (max-width:1200px ) {
+    .registform{
+        font-size: 9px;
+        width: 40%;
+        margin-left: auto;
+        margin-right: auto;
+        }
+
+        /* Login */
+    .loginimage{
+        width: 70%;
+    }
+    
+
+    .loginform{
+        width: 30%;
+        margin-left: -20%;
+    }
+
+    .phonenav{
+        display:bottom;
+    }
+
+    .navbar-fixed-bottom{
+        display: bottom;
+    }
+
+        /* Home Page Display */
+
+    .panel-primary{
+        width: 56%;
+    }
+ }
+
+
+/* ----------------------------------------------- */
+
+/* MEDIUM DEVICES (desktops,) */
+@media (max-width:992px ) {
+
+    .registform{
+        font-size: 9px;
+        width: 40%;
+        margin-left: auto;
+        margin-right: auto;
+        }
+
+        /* Login */
+    .loginimage{
+        width: 50%;
+    }
+    
+    .login-playstorebtn{
+        display: none;
+    }
+
+    .loginform{
+        width: 40%;
+        margin-top: 16%;
+    }
+
+    /* Nav Bar */
+    .center{
+        display: none;
+    }
+    .homenav{
+        margin-top: -17%;
+        margin-left: 25%;
+    }
+
+    .phonenav{
+        display: bottom;
+    }
+    
+    .fixed-bottom{
+        display: none;
+    }
+
+    .navbar-fixed-bottom{
+        display: bottom;
+    }
+
+    /* Home Page Display */
+
+    .panel-primary{
+        width: 100%;
+        margin-left: -17%;
+    }
+    /* Like and Comment Section */
+    .commentsection{
+        width: 94%;
+    }
+
+    .likehrt{
+        height: 25px;
+        width: 25px;
+    }
+    
+    .commenthrt{
+        height: 31px;
+        width: 25px;
+        margin-left: 1%;
+    }
+    .savehrt{
+        height: 25px;
+        width: 26px;
+        margin-left: 81%;
+    }
+}
+
+
+
+</style>
+{% endblock %}

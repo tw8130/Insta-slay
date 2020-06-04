@@ -1,5 +1,5 @@
  
-{%extends "django_registration/base.html"%} 
+{%extends "registration/base.html"%} 
 {% load bootstrap3 %} 
 {% block content %}
 <div class="container">
@@ -25,7 +25,7 @@
                     <!-- SignIN Button Next to (Do you have an account)! -->
                     <div style="margin-top: 20%;" class="panel-heading">
                         <p class="_g9ean pull-left">Have an account?</p>
-                        <a href="/accounts/login/" class="btn btn-primary btn-sm pull-right">Sign In</a>
+                        <a href="{% url 'login' %}" class="btn btn-primary btn-sm pull-right">Sign In</a>
                     </div>
                     <!--Collapse SignIN Button! -->
 
@@ -39,13 +39,13 @@
             
                 <div class="googlebtn">
             
-                    <a href="https://play.google.com/store/search?q=instagram"><img src="/static/images/playstore.jpeg" alt="signuplogo " style="width:150px; height:40px "></a>
+                    <a href="https://play.google.com/store/search?q=instagram"><img src="../../../static/images/playstore.jpeg" alt="signuplogo " style="width:150px; height:100px "></a>
             
                 </div>
             
                 <div class="applebtn">
             
-                    <a href="https://www.apple.com/us/search/instagram?src=itunes_serp"><img src="/static/images/applestore.jpeg"  alt="signuplogo " style="width:150px; height:40px "></a>
+                    <a href="https://www.apple.com/us/search/instagram?src=itunes_serp"><img src="../../../static/images/applestore.jpeg"  alt="signuplogo " style="width:150px; height:100px "></a>
             
                 </div>
             
@@ -53,6 +53,14 @@
             <!--Collapse! Play Store and Apple store Images With well text to put them sidebyside! -->
 
 </div>
+<style>
+    .container {
+        background: #4CA1AF;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to top, #C4E0E5, #4CA1AF);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to top, #C4E0E5, #4CA1AF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+</style>
 
 
 
